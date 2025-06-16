@@ -1,6 +1,6 @@
 export interface FlashcardDto { 
-  Id : number;
-  Question : string;
-  Answer : string;
-  Options : string[];
+  id : number;
+  question : string;
+  answer : string;
+  options : string[];
 }

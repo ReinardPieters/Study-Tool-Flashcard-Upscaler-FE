@@ -1,1 +1,20 @@
-<p>flashcard works!</p>
+<div class="flashcard-container" [class.flipped]="isFlipped">
+  <div class="flashcard">
+    <div class="front">
+      <h4>{{ flashCard.question }}</h4>
+      <div class="options">
+        @for (option of flashCard.options; track $index) {
+          <div class="option">
+            <input type="radio" [id]="'option' + $index" [name]="flashCard.question" [value]="option" [(ngModel)]="selectedOption">
+            <label [for]="'option' + $index">{{ option }}</label>
+          </div>
+        }
+      </div>
+      <button (click)="submitAnswer()" [disabled]="!selectedOption">Submit</button>
+    </div>
+    <div class="back">
+      <h4>The correct answer is:</h4>
+      <p>{{ flashCard.answer }}</p>
+    </div>
+  </div>
+</div>
