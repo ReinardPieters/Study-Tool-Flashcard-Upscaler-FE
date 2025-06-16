@@ -1,5 +1,5 @@
-<div id="add-note-container" class="form-actions mb-3">
-  <button (click)="toggleAddNewNote()">Add Note</button>
+ <div id="add-flashcard-container" class="row">
+  <button id="add-button" (click)="toggleAddNewNote()">Add Note</button>
 </div>
 
 @if (showNotes) {
@@ -7,7 +7,7 @@
   @for (note of notes; track $index) {
     <div class="note-wrapper">
       <app-notes [note]="note" class="note-card"></app-notes>
-        <!-- <button (click)="deleteNote(note.id)" class="btn btn-danger mt-2">Delete Note</button> -->
+        <button (click)="deleteNote(note.id)" class="btn btn-danger mt-2">Delete Note</button>
     </div>
   }
 </div>

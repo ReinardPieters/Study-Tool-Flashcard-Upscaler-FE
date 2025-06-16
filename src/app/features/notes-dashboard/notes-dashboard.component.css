@@ -31,3 +31,13 @@ app-notes {
   display: flex;
   gap: 1rem;
 }
+
+#add-button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #47d770;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  align-self: center;
+}

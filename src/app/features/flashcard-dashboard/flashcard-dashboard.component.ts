@@ -61,6 +61,7 @@ export class FlashcardDashboardComponent {
           this.loadFlashCards();
           this.toggleAddNewFlashCard();
           this.resetNewFlashcardForm();
+          return responseData;
         },
         error: (error: any) => {
           console.error('Error adding flashcard:', error);

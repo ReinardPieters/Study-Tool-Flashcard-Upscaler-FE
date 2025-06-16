@@ -15,12 +15,12 @@ export class DashboardComponent {
   public showFlashCardsDashboard(): void {
     this.showNotes = false;
     this.showFlashCards = true;
-    console.log(this.showFlashCards+ "cards show")
+    console.log(this.showFlashCards+ " cards show")
   }
 
   public showNotesDashboard(): void {
     this.showFlashCards = false;
     this.showNotes = true;
-    console.log(this.showNotes+ "notes show")
+    console.log(this.showNotes+ " notes show")
   }
 }
