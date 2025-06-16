@@ -1,1 +1,12 @@
-<p>notes works!</p>
+<div class="notes-container">
+    <div class="note-card">
+      <h3>{{ note.topic }}</h3>
+      <p>{{ note.description }}</p>
+
+      <ul class="keypoints">
+        @for (point of note.points; track $index) {
+          <li>{{ point }}</li>
+        }
+      </ul>
+    </div>
+</div>
