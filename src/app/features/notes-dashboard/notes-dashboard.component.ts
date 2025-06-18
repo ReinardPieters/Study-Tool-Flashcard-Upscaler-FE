@@ -67,10 +67,12 @@ export class NotesDashboardComponent {
   }
 
   public deleteNote(id: number): void {
-    this.noteService.deleteNote(id).subscribe(() => {
-      this.notes = this.notes.filter(note => note.id !== id);
+    this.noteService.deleteNote(id).subscribe({
+      next: () => { this.loadNotes(); },
+      error: (error: any) => {
+        console.error('Error deleting note:', error);
+      }
     });
-    this.loadNotes();
   }
 
   private resetNewNoteForm(): void {
@@ -78,9 +80,4 @@ export class NotesDashboardComponent {
     this.newDescription = '';
     this.newKeypoints = ['', '', '', ''];
   }
-  
-  // addKeypoint() {
-  //   this.newKeypoints.push('');
-  // }
-
 }
