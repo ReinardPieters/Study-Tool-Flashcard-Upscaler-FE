@@ -10,11 +10,12 @@
           </div>
         }
       </div>
-      <button (click)="submitAnswer()" [disabled]="!selectedOption">Submit</button>
+      <button (click)="submitAnswer()" [disabled]="!selectedOption">Check Answer</button>
     </div>
     <div class="back">
       <h4>The correct answer is:</h4>
       <p>{{ flashCard.answer }}</p>
+      <!-- <button (click)="flipBack()">Flip Back</button> -->
     </div>
   </div>
-</div>
+</div>  

@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { NoteDto } from '../../models/notes';
-import { NotesService } from '../../services/note.service';
-import { NotesComponent } from "../notes/notes.component";
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NoteDto } from '../../models/notes';
+import { NotesComponent } from "../notes/notes.component";
+import { NotesService } from '../../services/note.service';
 
 @Component({
   selector: 'app-notes-dashboard',
@@ -21,7 +21,7 @@ export class NotesDashboardComponent {
   newDescription: string = '';
   newKeypoints: string[] = ['', '', '', ''];
 
-  constructor(private noteService: NotesService) {}
+  constructor(private noteService: NotesService) { }
 
   public ngOnInit(): void {
     this.loadNotes();
@@ -78,4 +78,9 @@ export class NotesDashboardComponent {
     this.newDescription = '';
     this.newKeypoints = ['', '', '', ''];
   }
+  
+  // addKeypoint() {
+  //   this.newKeypoints.push('');
+  // }
+
 }

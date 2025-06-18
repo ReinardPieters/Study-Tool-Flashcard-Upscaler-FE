@@ -1,8 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FlashcardComponent } from '../flashcard/flashcard.component';
 import { FlashcardDto } from '../../models/flashcard';
 import { FlashcardService } from '../../services/flashcard.service';
-import { FlashcardComponent } from '../flashcard/flashcard.component';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -77,4 +77,5 @@ export class FlashcardDashboardComponent {
     this.newAnswer = '';
     this.newOptions = ['', '', '', ''];
   }
+  
 }

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { FlashcardDto } from '../../models/flashcard';
+
 import { CommonModule } from '@angular/common';
+import { FlashcardDto } from '../../models/flashcard';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -19,4 +20,9 @@ export class FlashcardComponent {
   submitAnswer() {
     this.isFlipped = true;
   }
+
+  // flipBack() {
+  //   this.isFlipped = false;
+  //   this.selectedOption = null;
+  // }
 }
