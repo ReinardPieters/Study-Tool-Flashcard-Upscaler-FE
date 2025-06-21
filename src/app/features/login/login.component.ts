@@ -33,11 +33,15 @@ export class LoginComponent {
     }
 
     this.loginService.login(userCredentials).subscribe({
-      next: (users: UserDto[]) => {
-        this.users = users;
-        console.log(this.users);
+      next: (user: UserDto) => {
+        console.log("Login successful", user);
+        this.router.navigate(['home']);
         
-        this.validateUser();
+        //this.validateUser();
+      },
+      error: (error) => {
+        console.error("Login failed", error);
+        alert("Login failed. Please check your credentials.");
       }
     });
   }
