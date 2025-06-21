@@ -20,9 +20,30 @@ export class FlashcardComponent {
   submitAnswer() {
     this.isFlipped = true;
   }
+isEditing = false;
+editableQuestion = '';
+editableOptions: string[] = [];
 
-  // flipBack() {
-  //   this.isFlipped = false;
-  //   this.selectedOption = null;
-  // }
+editFlashcard() {
+  this.isEditing = true;
+  this.editableQuestion = this.flashCard.question;
+  this.editableOptions = [...this.flashCard.options]; // Clone the options
+}
+
+saveFlashcard() {
+  this.flashCard.question = this.editableQuestion;
+  this.flashCard.options = [...this.editableOptions];
+  this.isEditing = false;
+}
+
+cancelEdit() {
+  this.isEditing = false;
+}
+
+
+
+  flipBack() {
+    this.isFlipped = false;
+    this.selectedOption = null;
+  }
 }
