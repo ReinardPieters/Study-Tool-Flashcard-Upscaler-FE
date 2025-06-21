@@ -56,6 +56,10 @@ button {
   align-self: center;
 }
 
+#btnDelete{
+  background-color: red;
+}
+
 button:disabled {
   background-color: #ccc;
   cursor: not-allowed;

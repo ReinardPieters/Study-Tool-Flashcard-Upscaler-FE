@@ -14,7 +14,7 @@
         </div>
         <button (click)="submitAnswer()" [disabled]="!selectedOption">Check Answer</button>
         <button (click)="editFlashcard()">Edit Flashcard</button>
-        <button (click)="deleteFlashCard(flashCard.id)">Delete Flashcard</button>
+        <button (click)="deleteFlashCard(flashCard.id)" id = "btnDelete">Delete Flashcard</button>
       </ng-container>
 
       <ng-template #editMode>
