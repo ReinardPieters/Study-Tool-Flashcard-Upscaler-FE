@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { FlashcardDashboardComponent } from '../flashcard-dashboard/flashcard-dashboard.component';
 import { NotesDashboardComponent } from '../notes-dashboard/notes-dashboard.component';
+import { Router } from '@angular/router';
+
+
+
 @Component({
   selector: 'app-dashboard',
   imports: [FlashcardDashboardComponent, NotesDashboardComponent],
@@ -11,6 +15,11 @@ export class DashboardComponent {
   public showFlashCards: boolean = true;
   public showNotes: boolean = true;
 
+  constructor(private router: Router) { }
+  
+  public redirect(){
+    this.router.navigate(['/login']);
+  }
 
   public showFlashCardsDashboard(): void {
     this.showNotes = false;

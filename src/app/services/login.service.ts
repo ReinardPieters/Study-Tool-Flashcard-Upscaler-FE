@@ -20,5 +20,7 @@ export class LoginService {
   login(credentials: LoginCredentials): Observable<UserDto> {
     return this.http.post<UserDto>('http://localhost:5013/api/Login/login', credentials);
   }
-
+  register(credentials: LoginCredentials): Observable<UserDto> {
+    return this.http.post<UserDto>('http://localhost:5013/api/Login/create-user', credentials);
+  }
 }
