@@ -1,21 +1,21 @@
- <div id="add-flashcard-container" class="row">
+<div id="add-flashcard-container" class="row">
   <button id="add-button" (click)="toggleAddNewNote()">Add Note</button>
 </div>
 
-@if (showNotes) {
- <div class="row">
-  @for (note of notes; track $index) {
-    <div class="note-wrapper">
+<div *ngIf="showNotes; else noteForm">
+  <div class="row">
+    <div class="note-wrapper" *ngFor="let note of notes; let i = index">
       <app-notes [note]="note" class="note-card"></app-notes>
-        <button (click)="deleteNote(note.id)" class="btn btn-danger mt-2">Delete Note</button>
+      <button (click)="deleteNote(note.id)" class="btn btn-danger mt-2">Delete Note</button>
+      <button (click)="editNote(note.id, note)" class="btn btn-secondary mt-2">Edit Note</button>
     </div>
-  }
+  </div>
 </div>
 
-}
-@else {
+<ng-template #noteForm>
   <div class="new-note-form">
-    <h3>Create a New Note</h3>
+    <h3>{{ isEditing ? 'Edit Note' : 'Create a New Note' }}</h3>
+
     <div class="form-group">
       <label for="topic">Topic</label>
       <input type="text" id="topic" [(ngModel)]="newTopic" class="form-control">
@@ -27,18 +27,24 @@
     </div>
 
     <h4>Key Points</h4>
-    @for (points of newKeypoints; track $index) {
-      <div class="form-group">
-        <label for="keypoint{{$index}}">Point {{$index + 1}}</label>
-        <input type="text" id="keypoint{{$index}}" [(ngModel)]="newKeypoints[$index]" class="form-control">
-      </div>
-    }
+    <div *ngFor="let point of newKeypoints; let i = index; trackBy: trackByIndex" class="form-group mb-2 d-flex align-items-center">
+      <input
+        type="text"
+        [(ngModel)]="newKeypoints[i].value"
+        class="form-control me-2"
+        placeholder="Key point {{ i + 1 }}"
+      />
+      <button type="button" class="btn btn-danger btn-sm" (click)="removeKeypoint(i)">🗑️</button>
+    </div>
 
-    <!-- <button (click)="addKeypoint()" class="btn btn-sm btn-outline-primary mb-2">+ Add Key Point</button> -->
+
+    <button (click)="addKeypoint()" class="btn btn-sm btn-custom-primary mt-2">+ Add Keypoint</button>
 
     <div class="form-actions mt-3">
-      <button (click)="saveNewNote()" class="btn btn-primary">Save</button>
-      <button (click)="toggleAddNewNote()" class="btn btn-secondary">Cancel</button>
+      <button (click)="isEditing ? updateNote() : saveNewNote()" class="btn btn-primary">
+        {{ isEditing ? 'Update Note' : 'Save' }}
+      </button>
+      <button (click)="cancelNoteForm()" class="btn btn-secondary">Cancel</button>
     </div>
   </div>
-}
+</ng-template>

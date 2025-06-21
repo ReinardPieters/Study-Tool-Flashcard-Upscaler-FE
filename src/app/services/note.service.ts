@@ -28,4 +28,10 @@ export class NotesService {
     public deleteNote(id : number) : Observable<NoteDto> {
         return this.http.delete<NoteDto>(this.baseUrl+'Note'+ '/' + id);
     }
+    public editNote(id:number ,note: NoteDto): Observable<NoteDto> {
+        return this.http.put<NoteDto>(this.baseUrl + 'Note'+'/'+ id,note);
+    }
+    public updateNote(note: NoteDto): Observable<void> {
+        return this.http.put<void>(this.baseUrl+"Note"+"/"+`${note.id}`, note);
+    }
 }
