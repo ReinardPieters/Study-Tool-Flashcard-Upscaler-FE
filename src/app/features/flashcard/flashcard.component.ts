@@ -15,9 +15,6 @@ export class FlashcardComponent {
 
   @Input() public flashCard!: FlashcardDto;
     flashcardService = inject(FlashcardService);
-
-
-
   isFlipped = false;
   selectedOption: string | null = null;
 
@@ -27,27 +24,33 @@ export class FlashcardComponent {
 isEditing = false;
 editableQuestion = '';
 editableOptions: string[] = [];
+editableAnswer = '';
+
 
 editFlashcard() {
   this.isEditing = true;
   this.editableQuestion = this.flashCard.question;
-  this.editableOptions = [...this.flashCard.options]; // Clone the options
+  this.editableOptions = [...this.flashCard.options];
+  this.editableAnswer = this.flashCard.answer;
 }
+
 
 saveFlashcard() {
   this.flashCard.question = this.editableQuestion;
   this.flashCard.options = [...this.editableOptions];
+  this.flashCard.answer = this.editableAnswer;
   this.isEditing = false;
-  this.flashcardService.saveFlashcard(this.flashCard.id , this.flashCard).subscribe(
-    {
-      next: (response) => {
-        console.log('Flashcard updated successfully:', response);
-      },
-      error: (error) => {
-        console.error('Error updating flashcard:', error);
-      }
-    })
+
+  this.flashcardService.saveFlashcard(this.flashCard.id, this.flashCard).subscribe({
+    next: (response) => {
+      console.log('Flashcard updated successfully:', response);
+    },
+    error: (error) => {
+      console.error('Error updating flashcard:', error);
+    }
+  });
 }
+
 
 cancelEdit() {
   this.isEditing = false;

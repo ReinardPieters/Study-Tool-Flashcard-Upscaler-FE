@@ -16,13 +16,21 @@
       </ng-container>
 
       <ng-template #editMode>
-        <input [(ngModel)]="editableQuestion" placeholder="Edit question" />
-        <div *ngFor="let option of editableOptions; let i = index">
-          <input [(ngModel)]="editableOptions[i]" placeholder="Edit option {{ i + 1 }}" />
-        </div>
-        <button (click)="saveFlashcard()">Save</button>
-        <button (click)="cancelEdit()">Cancel</button>
-      </ng-template>
+  <label for="question">Question</label>
+  <input [(ngModel)]="editableQuestion" placeholder="Edit question" />
+
+  <div *ngFor="let option of editableOptions; let i = index">
+    <label for="option{{ i }}">Option {{ i + 1 }}</label>
+    <input [(ngModel)]="editableOptions[i]" placeholder="Edit option {{ i + 1 }}" />
+  </div>
+
+  <label for="answer">Answer</label>
+  <input [(ngModel)]="editableAnswer" placeholder="Edit answer" />
+
+  <button (click)="saveFlashcard()">Save</button>
+  <button (click)="cancelEdit()">Cancel</button>
+</ng-template>
+
     </div>
 
     <div class="back">
