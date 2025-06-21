@@ -15,7 +15,7 @@ import { NotesDashboardComponent } from '../notes-dashboard/notes-dashboard.comp
 export class DashboardComponent {
   public showFlashCards: boolean = true;
   public showNotes: boolean = true;
-  heading: string = '';
+  heading: string = 'Flashcard Dashboard';
 
   constructor(private router: Router) { }
   
