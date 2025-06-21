@@ -3,6 +3,9 @@ import { Router } from '@angular/router'; // ✅ Import Router
 import { FlashcardDashboardComponent } from '../flashcard-dashboard/flashcard-dashboard.component';
 import { NotesDashboardComponent } from '../notes-dashboard/notes-dashboard.component';
 
+
+
+
 @Component({
   selector: 'app-dashboard',
   imports: [FlashcardDashboardComponent, NotesDashboardComponent],
@@ -14,7 +17,11 @@ export class DashboardComponent {
   public showNotes: boolean = true;
   heading: string = '';
 
-  constructor(private router: Router) {} // ✅ Inject Router
+  constructor(private router: Router) { }
+  
+  public redirect(){
+    this.router.navigate(['/login']);
+  }
 
   public showFlashCardsDashboard(): void {
     this.showNotes = false;

@@ -16,68 +16,133 @@ export class NotesDashboardComponent {
 
   public notes: NoteDto[] = [];
   public showNotes: boolean = true;
+  public isEditing: boolean = false;
+  public editNoteId: number | null = null;
 
-  newTopic: string = '';
-  newDescription: string = '';
-  newKeypoints: string[] = ['', '', '', ''];
+  // Use objects instead of strings to preserve focus
+  public newKeypoints: { value: string }[] = [
+    { value: '' },
+    { value: '' },
+    { value: '' },
+    { value: '' }
+  ];
+  public newTopic: string = '';
+  public newDescription: string = '';
 
   constructor(private noteService: NotesService) { }
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
     this.loadNotes();
   }
 
   private loadNotes(): void {
     this.noteService.getAllNotes().subscribe({
-      next: (responseData: NoteDto[]) => {
-        this.notes = responseData;
-      },
-      error: (error: any) => {
-        console.error('Error fetching notes:', error);
-      }
+      next: (response: NoteDto[]) => this.notes = response,
+      error: err => console.error('Error fetching notes:', err)
     });
   }
 
   public toggleAddNewNote(): void {
     this.showNotes = !this.showNotes;
+    this.isEditing = false;
+    this.editNoteId = null;
+    this.resetFormFields();
   }
 
   public saveNewNote(): void {
-    if (this.newTopic && this.newDescription && this.newKeypoints.some(k => k.trim() !== '')) {
+    if (
+      this.newTopic &&
+      this.newDescription &&
+      this.newKeypoints.some(k => k.value.trim() !== '')
+    ) {
       const newNote: NoteDto = {
         id: 0,
         topic: this.newTopic,
         description: this.newDescription,
-        points: this.newKeypoints.filter(k => k.trim() !== '')
+        points: this.newKeypoints.map(k => k.value.trim()).filter(k => k !== '')
       };
 
       this.noteService.addNote(newNote).subscribe({
-        next: (responseData: NoteDto) => {
+        next: () => {
           this.loadNotes();
           this.toggleAddNewNote();
-          this.resetNewNoteForm();
         },
-        error: (error: any) => {
-          console.error('Error adding note:', error);
-        }
+        error: err => console.error('Error adding note:', err)
       });
     } else {
-      alert('Please fill in the topic, description, and at least one key point.');
+      alert('Please fill in all required fields.');
     }
   }
 
   public deleteNote(id: number): void {
     this.noteService.deleteNote(id).subscribe({
-      next: () => { this.loadNotes(); },
-      error: (error: any) => {
-        console.error('Error deleting note:', error);
-      }
+      next: () => this.loadNotes(),
+      error: err => console.error('Error deleting note:', err)
     });
   }
 
-  private resetNewNoteForm(): void {
+  public editNote(id: number, note: NoteDto): void {
+    this.isEditing = true;
+    this.showNotes = false;
+    this.editNoteId = id;
+    this.newTopic = note.topic;
+    this.newDescription = note.description;
+    this.newKeypoints = note.points.map(p => ({ value: p }));
+  }
+
+  public updateNote(): void {
+    if (this.editNoteId === null) return;
+
+    const updatedNote: NoteDto = {
+      id: this.editNoteId,
+      topic: this.newTopic,
+      description: this.newDescription,
+      points: this.newKeypoints.map(k => k.value.trim()).filter(k => k !== '')
+    };
+
+    this.noteService.updateNote(updatedNote).subscribe({
+      next: () => {
+        this.loadNotes();
+        this.resetNoteForm();
+      },
+      error: err => console.error('Error updating note:', err)
+    });
+  }
+
+  public addKeypoint(): void {
+    this.newKeypoints.push({ value: '' });
+  }
+
+  public removeKeypoint(index: number): void {
+    if (this.newKeypoints.length > 1) {
+      this.newKeypoints.splice(index, 1);
+    }
+  }
+
+
+  public cancelNoteForm(): void {
+    this.resetNoteForm();
+  }
+
+  private resetNoteForm(): void {
+    this.showNotes = true;
+    this.isEditing = false;
+    this.editNoteId = null;
+    this.resetFormFields();
+  }
+
+  private resetFormFields(): void {
     this.newTopic = '';
     this.newDescription = '';
-    this.newKeypoints = ['', '', '', ''];
+    this.newKeypoints = [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' }
+    ];
+  }
+
+  trackByIndex(index: number): number {
+    return index;
   }
 }
