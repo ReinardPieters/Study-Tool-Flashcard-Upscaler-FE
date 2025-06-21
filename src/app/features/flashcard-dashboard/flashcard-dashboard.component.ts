@@ -78,4 +78,8 @@ export class FlashcardDashboardComponent {
     this.newOptions = ['', '', '', ''];
   }
   
+  public reloadFlashCardsFromEvent(): void {
+    console.log('Reloading flashcards');
+    this.loadFlashCards();
+  }
 }

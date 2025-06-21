@@ -24,8 +24,10 @@ export class FlashcardService {
         return this.http.post<FlashcardDto>(this.baseUrl+'Flashcard', newFlashcard);
     }
 
-    public deleteFlashcard(id : number) : Observable<FlashcardDto> {
-        return this.http.delete<FlashcardDto>(this.baseUrl+'Flashcard'+ '/' + id);
+    public deleteFlashcard(id : number) : Observable<any> {
+        return this.http.delete(this.baseUrl + 'Flashcard/' + id, {
+            responseType: 'text'
+        });
     }
     public saveFlashcard(id: number, updatedFlashcard: FlashcardDto): Observable<FlashcardDto> {
         return this.http.put<FlashcardDto>(this.baseUrl +'Flashcard' +'/'+  id, updatedFlashcard);

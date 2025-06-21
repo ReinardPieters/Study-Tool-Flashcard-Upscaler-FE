@@ -1,4 +1,5 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FlashcardDto } from '../../models/flashcard';
@@ -12,6 +13,9 @@ import { FlashcardService } from '../../services/flashcard.service';
   styleUrl: './flashcard.component.css',
 })
 export class FlashcardComponent {
+
+  @Output() refreshRequested = new EventEmitter<void>(); // emits flashcard ID
+
   @Input() public flashCard!: FlashcardDto;
 
   flashcardService = inject(FlashcardService);
@@ -89,4 +93,19 @@ export class FlashcardComponent {
   cancelEdit() {
     this.isEditing = false;
   }
+
+public deleteFlashCard(id: number): void {
+  this.flashcardService.deleteFlashcard(id).subscribe({
+    next: () => {
+      console.log('Flashcard deleted.');
+      this.refreshRequested.emit();
+      
+    },
+    error: (error: any) => {
+      console.error('Error deleting flashcard:', error)
+    }
+  })
 }
+}
+
+
