@@ -6,7 +6,8 @@
         <div class="options">
           @for (option of flashCard.options; track $index) {
             <div class="option">
-              <input type="radio" [id]="'option' + $index" [name]="flashCard.question" [value]="option" [(ngModel)]="selectedOption">
+              <input type="radio" [id]="'option' + $index" [name]="flashCard.question" [value]="option"[(ngModel)]="selectedOption"
+              />
               <label [for]="'option' + $index">{{ option }}</label>
             </div>
           }
@@ -16,27 +17,70 @@
       </ng-container>
 
       <ng-template #editMode>
-  <label for="question">Question</label>
-  <input [(ngModel)]="editableQuestion" placeholder="Edit question" />
+        <!-- Question Input -->
+        <label for="question">Question</label>
+        <input
+          [(ngModel)]="editableQuestion"
+          placeholder="Edit question"
+          class="form-control mb-2"
+        />
 
-  <div *ngFor="let option of editableOptions; let i = index">
-    <label for="option{{ i }}">Option {{ i + 1 }}</label>
-    <input [(ngModel)]="editableOptions[i]" placeholder="Edit option {{ i + 1 }}" />
-  </div>
+        <!-- Scrollable Options Section -->
+        <div class="options-scroll">
+          <div
+            *ngFor="let option of editableOptions; let i = index; trackBy: trackByIndex"
+            class="d-flex align-items-center mb-2"
+          >
+            <input
+              class="form-control me-2"
+              [ngModel]="editableOptions[i]"
+              (ngModelChange)="updateOption(i, $event)"
+              placeholder="Edit option {{ i + 1 }}"
+            />
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              (click)="removeOption(i)"
+              [disabled]="editableOptions.length <= 1"
+            >
+              🗑️
+            </button>
+          </div>
+        </div>
+        
 
-  <label for="answer">Answer</label>
-  <input [(ngModel)]="editableAnswer" placeholder="Edit answer" />
+        <!-- Add Option Button -->
+        <button
+          type="button"
+          class="btn btn-sm btn-primary mt-2"
+          (click)="addOption()"
+          [disabled]="editableOptions.length >= 4"
+        >
+          + Add Option
+        </button>
 
-  <button (click)="saveFlashcard()">Save</button>
-  <button (click)="cancelEdit()">Cancel</button>
-</ng-template>
+        <!-- Answer Input -->
+        <div class="mt-3">
+          <label for="answer">Answer</label>
+          <input
+            [(ngModel)]="editableAnswer"
+            placeholder="Edit answer"
+            class="form-control"
+          />
+        </div>
 
+        <!-- Action Buttons -->
+        <div class="mt-3 d-flex justify-content-between gap-2">
+          <button (click)="saveFlashcard()" class="btn btn-success w-50">Save</button>
+          <button (click)="cancelEdit()" class="btn btn-secondary w-50">Cancel</button>
+        </div>
+      </ng-template>
     </div>
 
     <div class="back">
       <h4>The correct answer is:</h4>
       <p>{{ flashCard.answer }}</p>
-      <button (click)="flipBack()">Flip Back</button>
+      <button (click)="flipBack()" class="btn btn-info">Flip Back</button>
     </div>
   </div>
 </div>
